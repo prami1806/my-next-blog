@@ -1,14 +1,18 @@
 {% extends 'blog/base.html' %}
  
 {% block content %}
-   <div>
-       {% if post.published_date %}
-            <p>published: {{ post.published_date }}<p>
-       {% endif %}
-       {% if user.is_authenticated %}
+    <div>
+        {% if post.published_date %}
+            <p>published: {{ post.published_date }}</p>
+        {% else %}
+            <a href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
+        {% if user.is_authenticated %}
             <a href="{% url 'post_edit' pk=post.pk %}">Edit Post</a>
-       {% endif %}
-       <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-       <p>{{ post.text|linebreaksbr }}</p>
-   </div>
+            <a href="{% url 'post_remove' pk=post.pk %}">Delete Post</a>
+        {% endif %}
+        <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
 {% endblock %}
+
